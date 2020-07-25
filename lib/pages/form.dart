@@ -5,13 +5,20 @@ class FormularioCadastro extends StatelessWidget {
   final _controllerNome = TextEditingController();
   final _controllerLogin = TextEditingController();
   final _controllerSenha = TextEditingController();
+  final _controllerEmail = TextEditingController();
+  final _controllerCPF = TextEditingController();
 
   _form(String text, String hint, 
-  {obscure = false, TextEditingController controller, FormFieldValidator<String> validator}){
+  {obscure = false, TextEditingController controller,
+  FormFieldValidator<String> validator, TextInputType keyboardType,
+  int maxLength}){
     return TextFormField(
       controller: controller,
       validator: validator,
       obscureText: obscure,
+      keyboardType: keyboardType,
+      maxLength: maxLength,
+      maxLines : 1,
       decoration: InputDecoration(
         labelText: text,
         hintText: hint,
@@ -75,6 +82,14 @@ class FormularioCadastro extends StatelessWidget {
               return null;
             }),
             SizedBox(height: 20,),
+                        _form('Email', 'Informe seu email', keyboardType: TextInputType.emailAddress, 
+            controller: _controllerEmail, validator: (String email){
+              if(email.isEmpty){
+                return 'Informe seu email';
+              }
+              return null;
+            }),
+            SizedBox(height: 20,),
             _form('Senha', 'Informe uma senha', obscure: true,
             controller: _controllerSenha, validator: (String senha){
               if(senha.isEmpty){
@@ -85,6 +100,8 @@ class FormularioCadastro extends StatelessWidget {
               return null;
             }),
             SizedBox(height: 20,),
+            _form('CPF: ', 'Informe seu CPF', keyboardType: TextInputType.number,
+            controller: _controllerCPF, maxLength: 11),
             _button('Cadastrar', _onClick),
           ],
         ),

@@ -16,7 +16,7 @@ class FormularioCadastro extends StatelessWidget {
   _form(BuildContext context, text, String hint,
   {obscure = false, TextEditingController controller,
   FormFieldValidator<String> validator, TextInputType keyboardType,
-  int maxLength, TextInputAction textInputAction, FocusNode focusNode, ValueChanged<String> onFieldSubmitted}){
+  int maxLength, TextInputAction textInputAction, FocusNode focusNode, FocusNode nextFocus}){
     return TextFormField(
       controller: controller,
       validator: validator,
@@ -26,7 +26,11 @@ class FormularioCadastro extends StatelessWidget {
       maxLines : 1,
       textInputAction: textInputAction,
       focusNode: focusNode,
-      onFieldSubmitted: onFieldSubmitted,
+      onFieldSubmitted: (String text){
+        if(nextFocus != null){
+          FocusScope.of(context).requestFocus(nextFocus);
+        }
+      },
       decoration: InputDecoration(
         labelText: text,
         hintText: hint,
@@ -77,9 +81,7 @@ class FormularioCadastro extends StatelessWidget {
             _form(context, 'Nome', 'Informe seu nome',
             textInputAction: TextInputAction.next,
             controller: _controllerNome,
-            onFieldSubmitted: (String text){
-              FocusScope.of(context).requestFocus(_focusLogin);
-            },
+            nextFocus: _focusLogin,
             validator: (String nome){
               if(nome.isEmpty){
                 return 'Preencha seu nome';
@@ -90,9 +92,7 @@ class FormularioCadastro extends StatelessWidget {
             _form(context, 'Login', 'Login de acesso',
             controller: _controllerLogin,
             focusNode: _focusLogin,
-            onFieldSubmitted: (String text){
-              FocusScope.of(context).requestFocus(_focusEmail);
-            },
+            nextFocus: _focusEmail,
             validator: (String login){
               if(login.isEmpty){
                 return 'Preencha o campo';
@@ -103,9 +103,7 @@ class FormularioCadastro extends StatelessWidget {
             _form(context, 'Email', 'Informe seu email', keyboardType: TextInputType.emailAddress, 
             controller: _controllerEmail,
             focusNode: _focusEmail,
-            onFieldSubmitted: (String text){
-              FocusScope.of(context).requestFocus(_focusSenha);
-            },
+            nextFocus: _focusSenha,
             validator: (String email){
               if(email.isEmpty){
                 return 'Informe seu email';
@@ -116,9 +114,7 @@ class FormularioCadastro extends StatelessWidget {
             _form(context, 'Senha', 'Informe uma senha', obscure: true,
             controller: _controllerSenha,
             focusNode: _focusSenha,
-            onFieldSubmitted: (String text){
-              FocusScope.of(context).requestFocus(_focusCPF);
-            },
+            nextFocus: _focusCPF,
             validator: (String senha){
               if(senha.isEmpty){
                 return 'Informe uma senha';

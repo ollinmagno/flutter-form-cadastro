@@ -8,7 +8,7 @@ class Button extends StatelessWidget {
     @override
     Widget build(BuildContext context){
         return Container(
-        height: 40,
+        height: 50,
         child: RaisedButton(
             child: Text(text, style: TextStyle(fontSize: 18, color: Colors.white)),
             color: Colors.blue,

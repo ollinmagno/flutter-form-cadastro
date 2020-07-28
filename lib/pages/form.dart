@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:form_cadastro/widgets/app_text.dart';
+import 'package:form_cadastro/widgets/button.dart';
 
 class FormularioCadastro extends StatelessWidget {
   final _formKey = GlobalKey<FormState>();
@@ -12,48 +14,6 @@ class FormularioCadastro extends StatelessWidget {
   final _focusEmail = FocusNode();
   final _focusSenha = FocusNode();
   final _focusCPF = FocusNode();
-
-  _form(BuildContext context, text, String hint,
-  {obscure = false, TextEditingController controller,
-  FormFieldValidator<String> validator, TextInputType keyboardType,
-  int maxLength, TextInputAction textInputAction, FocusNode focusNode, FocusNode nextFocus}){
-    return TextFormField(
-      controller: controller,
-      validator: validator,
-      obscureText: obscure,
-      keyboardType: keyboardType,
-      maxLength: maxLength,
-      maxLines : 1,
-      textInputAction: textInputAction,
-      focusNode: focusNode,
-      onFieldSubmitted: (String text){
-        if(nextFocus != null){
-          FocusScope.of(context).requestFocus(nextFocus);
-        }
-      },
-      decoration: InputDecoration(
-        labelText: text,
-        hintText: hint,
-        hintStyle: TextStyle(
-          fontSize: 16,
-        ),
-        labelStyle: TextStyle(
-          color: Colors.grey,
-          fontSize: 20,
-        ),
-      ),
-    );
-  }
-  _button(String text, Function onPressed){
-    return Container(
-      height: 40,
-      child: RaisedButton(
-        child: Text(text, style: TextStyle(fontSize: 18, color: Colors.white)),
-        color: Colors.blue,
-        onPressed: onPressed,
-      ),
-    );
-  }
 
   void _onClick(){
     _validateForm();
@@ -78,7 +38,7 @@ class FormularioCadastro extends StatelessWidget {
         padding: const EdgeInsets.all(16.0),
         child: ListView(
           children: <Widget>[
-            _form(context, 'Nome', 'Informe seu nome',
+            AppText(context, 'Nome', 'Informe seu nome',
             textInputAction: TextInputAction.next,
             controller: _controllerNome,
             nextFocus: _focusLogin,
@@ -89,7 +49,7 @@ class FormularioCadastro extends StatelessWidget {
               return null;
             }),
             SizedBox(height: 20,),
-            _form(context, 'Login', 'Login de acesso',
+            AppText(context, 'Login', 'Login de acesso',
             controller: _controllerLogin,
             focusNode: _focusLogin,
             nextFocus: _focusEmail,
@@ -100,7 +60,7 @@ class FormularioCadastro extends StatelessWidget {
               return null;
             }),
             SizedBox(height: 20,),
-            _form(context, 'Email', 'Informe seu email', keyboardType: TextInputType.emailAddress, 
+            AppText(context, 'Email', 'Informe seu email', keyboardType: TextInputType.emailAddress, 
             controller: _controllerEmail,
             focusNode: _focusEmail,
             nextFocus: _focusSenha,
@@ -111,7 +71,7 @@ class FormularioCadastro extends StatelessWidget {
               return null;
             }),
             SizedBox(height: 20,),
-            _form(context, 'Senha', 'Informe uma senha', obscure: true,
+            AppText(context, 'Senha', 'Informe uma senha', obscure: true,
             controller: _controllerSenha,
             focusNode: _focusSenha,
             nextFocus: _focusCPF,
@@ -124,7 +84,7 @@ class FormularioCadastro extends StatelessWidget {
               return null;
             }),
             SizedBox(height: 20,),
-            _form(context, 'CPF: ', 'Apenas números', keyboardType: TextInputType.number,
+            AppText(context, 'CPF: ', 'Apenas números', keyboardType: TextInputType.number,
             controller: _controllerCPF,
             maxLength: 11,
             focusNode: _focusCPF,
@@ -137,7 +97,7 @@ class FormularioCadastro extends StatelessWidget {
               return null;
             }),
             SizedBox(height: 20,),
-            _button('Cadastrar', _onClick),
+            Button('Cadastrar', onPressed: _onClick),
           ],
         ),
       ),

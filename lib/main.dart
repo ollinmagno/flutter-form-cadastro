@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:form_cadastro/pages/form.dart';
+import 'package:form_cadastro/pages/home_page.dart';
 
 
 void main() => runApp(MyApp());
@@ -11,7 +11,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Cadastro',
       theme: ThemeData(primarySwatch: Colors.blue),
-      home: FormularioCadastro(),
+      home: HomePage(),
     );
   }
 }

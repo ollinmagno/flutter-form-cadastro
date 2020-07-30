@@ -3,6 +3,7 @@ import 'package:form_cadastro/api/login_api.dart';
 import 'package:form_cadastro/pages/form.dart';
 import 'package:form_cadastro/utils/nav.dart';
 import 'package:form_cadastro/widgets/app_text.dart';
+import 'package:form_cadastro/widgets/button.dart';
 //import 'package:form_cadastro/widgets/button.dart';
 
 class HomePage extends StatelessWidget {
@@ -11,7 +12,7 @@ class HomePage extends StatelessWidget {
   final _loginKey = GlobalKey<FormState>();
   final _nextFocus = FocusNode();
 
-  void _onClickLogin() async {
+  void _onClickLogin(context) async {
     _validate();
     String login = _controllerLogin.text;
     String senha = _controllerSenha.text;
@@ -19,7 +20,7 @@ class HomePage extends StatelessWidget {
     print('$login, $senha');
     bool ok = await LoginApi.login(login, senha);
     if(ok){
-      //push(context, FormularioCadastro());
+      push(context, FormularioCadastro());
     }else {
       print("Login incorreto");
     }
@@ -64,10 +65,9 @@ class HomePage extends StatelessWidget {
               ),
               Container(
                 width: double.infinity,
-                child: RaisedButton(
-                  color: Colors.blue,
-                  child: Text('Entrar'),
-                  onPressed: () => _onClickLogin),
+                child: Button('Entrar', onPressed:(){
+                  _onClickLogin(context);
+                }),
               ),
             ],
           ),

@@ -9,13 +9,24 @@ import 'package:form_cadastro/utils/nav.dart';
 import 'package:form_cadastro/widgets/app_text.dart';
 import 'package:form_cadastro/widgets/button.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
+  @override
+  _HomePageState createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
   final _controllerLogin = TextEditingController();
   final _controllerSenha = TextEditingController();
   final _loginKey = GlobalKey<FormState>();
   final _nextFocus = FocusNode();
 
-  void _onClickLogin(context) async {
+  _validate() {
+    if (!_loginKey.currentState.validate()) {
+      return;
+    }
+  }
+
+  void _onClickLogin() async {
     _validate();
     String login = _controllerLogin.text;
     String senha = _controllerSenha.text;
@@ -28,20 +39,16 @@ class HomePage extends StatelessWidget {
       print("Login incorreto");
     }
   }
-  
-  // _onClickLoginGoogle(context) async {
-  //   final service = FirebaseService();
-  //   ApiResponse response = await service.loginGoogle();
 
-  //   if (response.ok) {
-  //       Navigator.push(
-  //         context, MaterialPageRoute(builder: (context) => HomeScreen()));
-  //     }
-  // }
+  _onClickLoginGoogle() async {
+    final service = FirebaseService();
+    ApiResponse response = await service.loginGoogle();
 
-  _validate() {
-    if (!_loginKey.currentState.validate()) {
-      return;
+    if (response.ok) {
+      Navigator.push(
+          context, MaterialPageRoute(builder: (context) => HomeScreen()));
+    }else {
+      print('${response.message}');
     }
   }
 
@@ -84,28 +91,41 @@ class HomePage extends StatelessWidget {
                     height: 55,
                     width: double.infinity,
                     child: Button('Entrar', onPressed: () {
-                      _onClickLogin(context);
+                      _onClickLogin();
                     }),
                   ),
-                  SizedBox(height: 20,),
+                  SizedBox(
+                    height: 20,
+                  ),
                   Container(
                     height: 55,
                     width: double.infinity,
                     child: GoogleSignInButton(
                       onPressed: () {
-                        //_onClickLogin(context);
+                        _onClickLoginGoogle();
                       },
                       darkMode: false,
                     ),
                   ),
-                  SizedBox(height: 20,),
+                  SizedBox(
+                    height: 20,
+                  ),
                   GestureDetector(
-                    onTap: (){
-                      Navigator.push(context, MaterialPageRoute(builder: (context) => FormularioCadastro()));
+                    onTap: () {
+                      print('cadastrar');
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => FormularioCadastro()));
                     },
-                    child: Text('Cadastrar', style:
-                    TextStyle(fontSize: 19, decoration: TextDecoration.underline,
-                    color: Colors.grey.shade600, fontWeight: FontWeight.bold),),
+                    child: Text(
+                      'Cadastrar',
+                      style: TextStyle(
+                          fontSize: 19,
+                          decoration: TextDecoration.underline,
+                          color: Colors.grey.shade600,
+                          fontWeight: FontWeight.bold),
+                    ),
                   ),
                 ],
               ),

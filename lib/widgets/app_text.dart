@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
 
 class AppText extends StatelessWidget {
-  String text;
-  String hint;
-  BuildContext context;
-  TextEditingController controller;
-  bool obscure;
-  FormFieldValidator<String> validator;
-  TextInputType keyboardType;
-  int maxLength;
-  TextInputAction textInputAction;
-  FocusNode focusNode;
-  FocusNode nextFocus;
+  final String text;
+  final String hint;
+  final BuildContext context;
+  final TextEditingController controller;
+  final bool obscure;
+  final FormFieldValidator<String> validator;
+  final TextInputType keyboardType;
+  final int maxLength;
+  final TextInputAction textInputAction;
+  final FocusNode focusNode;
+  final FocusNode nextFocus;
 
   AppText(this.context, this.text, this.hint,
       {this.controller,

@@ -47,7 +47,7 @@ class _HomePageState extends State<HomePage> {
     if (response.ok) {
       Navigator.push(
           context, MaterialPageRoute(builder: (context) => HomeScreen()));
-    }else {
+    } else {
       print('${response.message}');
     }
   }
@@ -82,7 +82,7 @@ class _HomePageState extends State<HomePage> {
                 focusNode: _nextFocus,
               ),
               SizedBox(
-                height: 20,
+                height: 40,
               ),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -90,12 +90,12 @@ class _HomePageState extends State<HomePage> {
                   Container(
                     height: 55,
                     width: double.infinity,
-                    child: Button('Entrar', onPressed: () {
+                    child: Button('ENTRAR', onPressed: () {
                       _onClickLogin();
                     }),
                   ),
                   SizedBox(
-                    height: 20,
+                    height: 16,
                   ),
                   Container(
                     height: 55,
@@ -108,24 +108,43 @@ class _HomePageState extends State<HomePage> {
                     ),
                   ),
                   SizedBox(
-                    height: 20,
+                    height: 36,
                   ),
-                  GestureDetector(
-                    onTap: () {
-                      print('cadastrar');
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => FormularioCadastro()));
-                    },
-                    child: Text(
-                      'Cadastrar',
-                      style: TextStyle(
-                          fontSize: 19,
-                          decoration: TextDecoration.underline,
-                          color: Colors.grey.shade600,
-                          fontWeight: FontWeight.bold),
-                    ),
+                  Row(
+                    children: <Widget>[
+                      Expanded(
+                        child: Container(
+                          margin: const EdgeInsets.only(left: 3, right: 16),
+                          child: Divider(
+                            color: Colors.black,
+                          ),
+                        ),
+                      ),
+                      InkWell(
+                        onTap: () {
+                          print('cadastrar');
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => FormularioCadastro()));
+                        },
+                        child: Text(
+                          'Cadastrar',
+                          style: TextStyle(
+                              fontSize: 19,
+                              color: Colors.grey.shade600,
+                              fontWeight: FontWeight.bold),
+                        ),
+                      ),
+                      Expanded(
+                        child: Container(
+                          margin: const EdgeInsets.only(left: 16, right: 3),
+                          child: Divider(
+                            color: Colors.black,
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
                 ],
               ),

@@ -16,7 +16,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   final _controllerLogin = TextEditingController();
-  final _controllerSenha = TextEditingController();
+  final _controllerPassword = TextEditingController();
   final _loginKey = GlobalKey<FormState>();
   final _nextFocus = FocusNode();
 
@@ -26,26 +26,27 @@ class _HomePageState extends State<HomePage> {
     }
   }
 
-  void _onClickLogin() async {
+  Future<bool> _onClickLogin() async {
     _validate();
-    String login = _controllerLogin.text;
-    String senha = _controllerSenha.text;
+    final String login = _controllerLogin.text;
+    final String password = _controllerPassword.text;
 
-    print('$login, $senha');
-    bool ok = await LoginApi.login(login, senha);
-    if (ok) {
-      push(context, FormularioCadastro());
-    } else {
-      print("Login incorreto");
-    }
+    print('$login, $password');
+    await LoginApi.login(login, password).then
+    ((successfullyLoggedIn) {
+      if(successfullyLoggedIn){
+        push(context, HomeScreen());
+      }
+      return;
+    });
   }
 
-  _onClickLoginGoogle() async {
-    final service = FirebaseService();
+  Future<void>_onClickLoginGoogle() async {
+    final FirebaseService service = FirebaseService();
     ApiResponse response = await service.loginGoogle();
 
     if (response.ok) {
-      Navigator.push(
+      await Navigator.push(
           context, MaterialPageRoute(builder: (context) => HomeScreen()));
     } else {
       print('${response.message}');
@@ -59,29 +60,41 @@ class _HomePageState extends State<HomePage> {
         key: _loginKey,
         child: Container(
           color: Colors.grey.shade200,
-          padding: EdgeInsets.all(16.0),
+          padding: const EdgeInsets.all(16),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               AppText(
                 context,
-                'Login',
-                'Digite o login',
+                "Login",
+                "Digite o login",
                 controller: _controllerLogin,
                 nextFocus: _nextFocus,
+                validator: (String text) {
+                  if(text.isEmpty){
+                    return "Informe seu usuário";
+                  }
+                  return null;
+                }
               ),
-              SizedBox(
+              const SizedBox(
                 height: 12,
               ),
               AppText(
                 context,
-                'Senha',
-                'Digite sua senha',
-                controller: _controllerSenha,
+                "Senha",
+                "Digite sua senha",
+                controller: _controllerPassword,
                 obscure: true,
                 focusNode: _nextFocus,
+                validator: (String text) {
+                  if(text.isEmpty){
+                    return "Informe sua senha";
+                  }
+                  return null;
+                }
               ),
-              SizedBox(
+              const SizedBox(
                 height: 40,
               ),
               Column(
@@ -90,11 +103,11 @@ class _HomePageState extends State<HomePage> {
                   Container(
                     height: 55,
                     width: double.infinity,
-                    child: Button('ENTRAR', onPressed: () {
+                    child: Button("ENTRAR", onPressed: () {
                       _onClickLogin();
                     }),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 16,
                   ),
                   Container(
@@ -107,7 +120,7 @@ class _HomePageState extends State<HomePage> {
                       darkMode: false,
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 36,
                   ),
                   Row(
@@ -122,14 +135,14 @@ class _HomePageState extends State<HomePage> {
                       ),
                       InkWell(
                         onTap: () {
-                          print('cadastrar');
+                          print("cadastrar");
                           Navigator.push(
                               context,
                               MaterialPageRoute(
                                   builder: (context) => FormularioCadastro()));
                         },
                         child: Text(
-                          'Cadastrar',
+                         "Cadastrar",
                           style: TextStyle(
                               fontSize: 19,
                               color: Colors.grey.shade600,

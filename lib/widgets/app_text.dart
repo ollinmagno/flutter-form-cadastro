@@ -14,9 +14,9 @@ class AppText extends StatelessWidget {
   final FocusNode nextFocus;
 
   AppText(this.context, this.text, this.hint,
-      {this.controller,
+      {@required this.validator,
+      this.controller,
       this.obscure = false,
-      this.validator,
       this.keyboardType,
       this.maxLength,
       this.textInputAction,
@@ -41,11 +41,11 @@ class AppText extends StatelessWidget {
       },
       decoration: InputDecoration(
         border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(8.0),
+          borderRadius: BorderRadius.circular(8),
         ),
         labelText: text,
         hintText: hint,
-        hintStyle: TextStyle(
+        hintStyle: const TextStyle(
           fontSize: 16,
         ),
         labelStyle: TextStyle(

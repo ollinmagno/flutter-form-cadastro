@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_auth_buttons/flutter_auth_buttons.dart';
-import 'package:form_cadastro/api/api.dart';
+import 'package:form_cadastro/api/api_response.dart';
 import 'package:form_cadastro/api/login_api.dart';
 import 'package:form_cadastro/firebase/firebase_service.dart';
 import 'package:form_cadastro/pages/form.dart';
@@ -37,7 +37,7 @@ class _HomePageState extends State<HomePage> {
       if(successfullyLoggedIn){
         push(context, HomeScreen());
       }
-      return;
+      return false;
     });
   }
 

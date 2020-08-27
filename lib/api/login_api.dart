@@ -3,7 +3,7 @@ import 'package:form_cadastro/api/api_response.dart';
 import 'package:http/http.dart' as http;
 
 class LoginApi {
-  static Future<ApiResponse<bool>> login(String login, String senha) async{
+  static Future<bool> login(String login, String senha) async{
     const String url = "https://carros-springboot.herokuapp.com/api/v2/login";
 
     final Map<String, String> headers = {
@@ -23,9 +23,9 @@ class LoginApi {
     print('Response status: ${response.statusCode}');
     
     if(response.statusCode == 200){
-      return ApiResponse.ok();
+      return true;
     }
-    
-    return ApiResponse.error();
+
+    return false;
   }
 }

@@ -36,7 +36,7 @@ class FirebaseService {
       return ApiResponse.ok();
     } catch (error) {
       print("Firebase error $error");
-      return ApiResponse.error(message: "Não foi possível fazer o login");
+      //return ApiResponse.error(message: "Não foi possível fazer o login");
     }
   }
 

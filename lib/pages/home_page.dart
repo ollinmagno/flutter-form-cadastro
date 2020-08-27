@@ -34,10 +34,11 @@ class _HomePageState extends State<HomePage> {
     print('$login, $password');
     await LoginApi.login(login, password).then
     ((successfullyLoggedIn) {
-      if(successfullyLoggedIn == true){
+      if(successfullyLoggedIn){
         push(context, HomeScreen());
       }
-      return false;
+
+      return ApiResponse.error();
     });
   }
 

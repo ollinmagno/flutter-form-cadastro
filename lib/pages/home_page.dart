@@ -26,7 +26,7 @@ class _HomePageState extends State<HomePage> {
     }
   }
 
-  Future<bool> _onClickLogin() async {
+  Future<ApiResponse<bool>> _onClickLogin() async {
     _validate();
     final String login = _controllerLogin.text;
     final String password = _controllerPassword.text;
@@ -34,7 +34,7 @@ class _HomePageState extends State<HomePage> {
     print('$login, $password');
     await LoginApi.login(login, password).then
     ((successfullyLoggedIn) {
-      if(successfullyLoggedIn){
+      if(successfullyLoggedIn != null){
         push(context, HomeScreen());
       }
       return false;

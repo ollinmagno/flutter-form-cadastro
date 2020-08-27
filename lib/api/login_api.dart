@@ -1,8 +1,9 @@
 import 'dart:convert';
+import 'package:form_cadastro/api/api_response.dart';
 import 'package:http/http.dart' as http;
 
 class LoginApi {
-  static Future<bool> login(String login, String senha) async{
+  static Future<ApiResponse<bool>> login(String login, String senha) async{
     const String url = "https://carros-springboot.herokuapp.com/api/v2/login";
 
     final Map<String, String> headers = {
@@ -21,9 +22,12 @@ class LoginApi {
     print('Response body: ${response.body}');
     print('Response status: ${response.statusCode}');
     
-    if(response.statusCode == 200){
-      return true;
+    try{
+      if(response.statusCode == 200){
+      return ApiResponse.ok();
     }
-    return false;
+    }catch(ApiResponse){
+      return ApiResponse.error();
+    }
   }
 }

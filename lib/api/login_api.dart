@@ -1,17 +1,26 @@
+import 'dart:convert';
 import 'package:http/http.dart' as http;
 
 class LoginApi {
   static Future<bool> login(String login, String senha) async{
-    const String url = "http://livrowebservices.com.br/rest/login";
+    const String url = "https://carros-springboot.herokuapp.com/api/v2/login";
+
+    final Map<String, String> headers = {
+      "Content-Type": "application/json",
+    };
 
     Map params = {
-      "login" : login,
-      "senha" : senha,
+      "username": login,
+      "password": senha,
     };
-    final response = await http.post(url, body: params);
+    final String jsonParams = json.encode(params);
+    
+    final http.Response response = await http.post
+    (url, body: jsonParams, headers: headers);
+
     print('Response body: ${response.body}');
     print('Response status: ${response.statusCode}');
-
+    
     if(response.statusCode == 200){
       return true;
     }

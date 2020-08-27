@@ -22,12 +22,10 @@ class LoginApi {
     print('Response body: ${response.body}');
     print('Response status: ${response.statusCode}');
     
-    try{
-      if(response.statusCode == 200){
+    if(response.statusCode == 200){
       return ApiResponse.ok();
     }
-    }catch(ApiResponse){
-      return ApiResponse.error();
-    }
+    
+    return ApiResponse.error();
   }
 }

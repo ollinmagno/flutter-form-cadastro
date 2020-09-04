@@ -19,6 +19,7 @@ class _HomePageState extends State<HomePage> {
   final _controllerPassword = TextEditingController();
   final _loginKey = GlobalKey<FormState>();
   final _nextFocus = FocusNode();
+  bool _showProgress = false;
 
   _validate() {
     if (!_loginKey.currentState.validate()) {
@@ -32,12 +33,17 @@ class _HomePageState extends State<HomePage> {
     final String password = _controllerPassword.text;
 
     print('$login, $password');
+    setState(() {
+      _showProgress = true;
+    });
     await LoginApi.login(login, password).then
     ((successfullyLoggedIn) {
       if(successfullyLoggedIn){
         push(context, HomeScreen());
       }
-
+      setState(() {
+        _showProgress = false;
+      });
       return ApiResponse.error();
     });
   }
@@ -53,7 +59,7 @@ class _HomePageState extends State<HomePage> {
       print('${response.message}');
     }
   }
-
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -106,7 +112,7 @@ class _HomePageState extends State<HomePage> {
                     width: double.infinity,
                     child: Button("ENTRAR", onPressed: () {
                       _onClickLogin();
-                    }),
+                    }, showProgress: _showProgress),
                   ),
                   const SizedBox(
                     height: 16,
@@ -166,6 +172,13 @@ class _HomePageState extends State<HomePage> {
           ),
         ),
       ),
-    );
+    ); 
+  }
+  @override
+  void dispose(){
+    _controllerLogin.dispose();
+    _controllerPassword.dispose();
+    _nextFocus.dispose();
+    super.dispose();
   }
 }

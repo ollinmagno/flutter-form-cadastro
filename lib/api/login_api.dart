@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'package:form_cadastro/api/api_response.dart';
 import 'package:http/http.dart' as http;
 
 class LoginApi {
@@ -10,7 +9,7 @@ class LoginApi {
       "Content-Type": "application/json",
     };
 
-    Map params = {
+    final Map<String, dynamic> params = {
       "username": login,
       "password": senha,
     };
